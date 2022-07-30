@@ -1,0 +1,7 @@
+{
+	"name": "template-express-saas",
+	"version": "0.0.1",
+	"main": "index.ts",
+	"author": "DHN Chandan <php.chandan@gmail.com>",
+	"license": "MIT"
+}
