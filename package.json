@@ -1,10 +1,11 @@
 {
 	"name": "template-express-saas",
 	"version": "0.0.1",
-	"main": "index.ts",
+	"main": "src/app.ts",
 	"author": "DHN Chandan <php.chandan@gmail.com>",
 	"license": "MIT",
 	"scripts": {
+		"dev": "ts-node-dev --respawn --transpile-only src/app.ts",
 		"lint": "next lint",
 		"prettier": "prettier --list-different .",
 		"prettier:check": "prettier --check .",
