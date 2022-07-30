@@ -4,6 +4,17 @@
 	"main": "index.ts",
 	"author": "DHN Chandan <php.chandan@gmail.com>",
 	"license": "MIT",
+	"scripts": {
+		"lint": "next lint",
+		"prettier": "prettier --list-different .",
+		"prettier:check": "prettier --check .",
+		"prettier:fix": "prettier --write .",
+		"cz": "git cz",
+		"cz:install": "commitizen init cz-conventional-changelog --yarn --dev --exact",
+		"cz:force": "commitizen init cz-conventional-changelog --yarn --dev --exact --force",
+		"lint-staged": "lint-staged",
+		"prepare": "husky install"
+	},
 	"devDependencies": {
 		"@rushstack/eslint-config": "^2.6.2",
 		"@types/bcrypt": "^5.0.0",
@@ -46,5 +57,18 @@
 		"pino": "^8.3.1",
 		"pino-pretty": "^8.1.0",
 		"zod": "^3.17.10"
+	},
+	"lint-staged": {
+		"*.(ts|tsx)": "eslint --cache --fix",
+		"*": "prettier --write --ignore-unknown"
+	},
+	"config": {
+		"commitizen": {
+			"path": "./node_modules/cz-conventional-changelog"
+		}
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/grid-momenta/template-express-saas"
 	}
 }
