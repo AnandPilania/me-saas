@@ -1,7 +1,7 @@
 import express from "express";
 import { authRoutes } from "./modules/auth";
 import { userRoutes } from "./modules/user";
-import { apiVersion } from "./utils/const";
+import { apiVersion } from "./utils/consts";
 
 const router = express.Router();
 
@@ -10,7 +10,7 @@ router.get("/health", (_, res) => res.status(200).send("OK"));
 
 // Module apis
 router.use(`${apiVersion}/auth`, authRoutes);
-router.use(`${apiVersion}/user`, userRoutes);
+router.use(`${apiVersion}/users`, userRoutes);
 
 // Catch all unmatched routes
 router.all("*", (_, res) => res.status(404).send("Route not found"));
