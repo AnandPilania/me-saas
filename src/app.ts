@@ -1,12 +1,13 @@
 require("dotenv").config();
 import express from "express";
 import config from "config";
+import { log } from "./providers";
 
 const app = express();
 app.use(express.json());
 
 const port = config.get<number>("port");
 
-app.listen(port, () => {
-	console.log(`Server started on port ${port}`);
+app.listen(port, async () => {
+	log.info(`Server started on port ${port}`);
 });
