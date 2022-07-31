@@ -14,7 +14,8 @@
 		"cz:install": "commitizen init cz-conventional-changelog --yarn --dev --exact",
 		"cz:force": "commitizen init cz-conventional-changelog --yarn --dev --exact --force",
 		"lint-staged": "lint-staged",
-		"prepare": "husky install"
+		"prepare": "husky install",
+		"token": "node -e \"console.log(crypto.randomBytes(32).toString('hex'))\""
 	},
 	"devDependencies": {
 		"@rushstack/eslint-config": "^2.6.2",
