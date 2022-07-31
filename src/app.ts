@@ -4,6 +4,7 @@ import cors from "cors";
 import config from "config";
 import { connectMongo, log } from "./providers";
 import router from "./routes";
+import { errorHandler } from "./middlewares";
 
 const app = express();
 app.use(express.json());
@@ -16,6 +17,9 @@ app.use(
 );
 
 app.use(router);
+
+// Error handler. Must be placed at the end of the middleware chain.
+app.use(errorHandler);
 
 const port = config.get<number>("port");
 
