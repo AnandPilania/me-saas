@@ -1,7 +1,9 @@
-import { DocumentType, getModelForClass, modelOptions, pre, prop, Severity } from "@typegoose/typegoose";
+import { DocumentType, getModelForClass, modelOptions, plugin, pre, prop, Severity } from "@typegoose/typegoose";
+import { Schema, Types } from "mongoose";
+import passportLocalMongoose from "passport-local-mongoose";
 import argon2 from "argon2";
 import { v4 as uuid } from "uuid";
-import { log } from "../../providers";
+import { userServices } from "./";
 
 @modelOptions({
 	schemaOptions: {
@@ -23,9 +25,16 @@ import { log } from "../../providers";
 
 	return;
 })
+@plugin(passportLocalMongoose)
 export class User {
+	@prop({ required: true, type: Schema.Types.ObjectId })
+	public _id?: Types.ObjectId;
+
 	@prop({ required: true, unique: true, lowercase: true })
 	public email: string;
+
+	@prop({ required: true, unique: true, lowercase: true })
+	public username: string;
 
 	@prop({ required: true })
 	public name: string;
@@ -43,12 +52,7 @@ export class User {
 	public verified: boolean;
 
 	public async validatePassword(this: DocumentType<User>, userPassword: string): Promise<boolean> {
-		try {
-			return await argon2.verify(this.password, userPassword);
-		} catch (error) {
-			log.error(error, "Could not verify password");
-			return false;
-		}
+		return await userServices.verifyUserPassword(this.password, userPassword);
 	}
 }
 
