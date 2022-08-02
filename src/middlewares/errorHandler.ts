@@ -12,9 +12,10 @@ import { log } from "../providers";
  */
 const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction): void => {
 	log.error("[error] catch in global middleware.");
+	log.error(err);
 
 	if (err) {
-		res.send("Something went wrong. Please try again.");
+		res.json({ message: err?.message, type: err?.name });
 	}
 };
 
