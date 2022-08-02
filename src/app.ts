@@ -2,9 +2,11 @@ require("dotenv").config();
 import express from "express";
 import cors from "cors";
 import config from "config";
+import passport from "passport";
 import { connectMongo, log } from "./providers";
 import router from "./routes";
 import { errorHandler } from "./middlewares";
+import passportAuth from "./modules/auth/passport/auth.config";
 
 const app = express();
 app.use(express.json());
@@ -15,6 +17,10 @@ app.use(
 		origin: "*",
 	}),
 );
+
+// Initialize passport
+app.use(passport.initialize());
+passportAuth(passport);
 
 app.use(router);
 
