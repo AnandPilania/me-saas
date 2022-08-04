@@ -1,13 +1,29 @@
-import express from "express";
+import { Router } from "express";
 import passport from "passport";
-import { protectedRoute, authenticateUser } from "./auth.controllers";
+import authController, { AuthController } from "./auth.controllers";
 
-const router = express.Router();
+class AuthRouter {
+	public router: Router;
+	private authController: AuthController = authController;
 
-router.get("/health", (_, res) => res.status(200).send("Auth router OK"));
+	public constructor() {
+		this.router = Router();
+		this.routes();
+	}
 
-router.get("/protected", [passport.authenticate("jwt", { session: false })], protectedRoute);
+	public routes = (): void => {
+		this.router.get("/health", (_, res) => res.status(200).send("Auth router OK"));
 
-router.post("/login", authenticateUser);
+		this.router.get(
+			"/protected",
+			[passport.authenticate("jwt", { session: false })],
+			this.authController.protectedRoute,
+		);
 
-export default router;
+		this.router.post("/login", this.authController.authenticateUser);
+	};
+}
+
+const authRouter = new AuthRouter();
+
+export default authRouter.router;

@@ -1,7 +1,7 @@
 import passport from "passport";
 import LocalStrategy from "passport-local";
-import { userServices } from "../../user";
-import { log } from "../../../providers";
+import usersService from "../../users/user.services";
+import log from "../../../providers/logger.provider";
 
 const localPassport = passport.use(
 	new LocalStrategy.Strategy({ usernameField: "username" }, async (username, password, done) => {
@@ -9,14 +9,14 @@ const localPassport = passport.use(
 
 		try {
 			// Find user by username
-			const user = await userServices.findUserByUsername(username);
+			const user = await usersService.findUserByUsername(username);
 
 			if (!user) {
 				return done(null, false, { message: `username ${username} not found.` });
 			}
 
 			// Verify password
-			const isValid = await userServices.verifyUserPassword(user.password, password);
+			const isValid = await usersService.verifyUserPassword(user.password, password);
 
 			if (!isValid) {
 				return done(null, false, { message: "Invalid username or password." });

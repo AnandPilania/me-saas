@@ -1,9 +1,10 @@
 import path from "path";
-import { User, userServices } from "../../user";
-import { log } from "../../../providers";
+import log from "../../../providers/logger.provider";
+import usersService from "../../users/user.services";
+import { User } from "../../users/user.model";
 
-export default function (passport: any) {
-	log.info("[auth config]");
+export default function (passport: any): void {
+	log.info("[passport] auth config");
 
 	passport.serializeUser(function (user: User, done: any) {
 		log.info("[serialize]");
@@ -12,7 +13,7 @@ export default function (passport: any) {
 	passport.deserializeUser(function (id: string, done: any) {
 		log.info("[deserialize]", id);
 
-		const user = userServices.findUserById(id);
+		const user = usersService.findUserById(id);
 		if (user) {
 			done(null, user);
 		}

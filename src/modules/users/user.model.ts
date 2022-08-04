@@ -3,7 +3,7 @@ import { Schema, Types } from "mongoose";
 import passportLocalMongoose from "passport-local-mongoose";
 import argon2 from "argon2";
 import { v4 as uuid } from "uuid";
-import { userServices } from "./";
+import usersService from "./user.services";
 
 @modelOptions({
 	schemaOptions: {
@@ -52,7 +52,7 @@ export class User {
 	public verified: boolean;
 
 	public async validatePassword(this: DocumentType<User>, userPassword: string): Promise<boolean> {
-		return await userServices.verifyUserPassword(this.password, userPassword);
+		return await usersService.verifyUserPassword(this.password, userPassword);
 	}
 }
 

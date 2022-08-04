@@ -1,27 +1,38 @@
-import express from "express";
-import { authRoutes } from "./modules/auth";
-import { userRoutes } from "./modules/user";
+import { Router } from "express";
+import authRoutes from "./modules/auth/auth.routes";
+import usersRouter from "./modules/users/user.routes";
 import { apiVersion } from "./utils/consts";
 
-const router = express.Router();
+class RootRoutes {
+	public router: Router;
 
-router.get("/", (_, res) => res.status(200).send(`Express SaaS app. API version V1.`));
+	public constructor() {
+		this.router = Router();
+		this.routes();
+	}
 
-// Health check
-router.get("/health", (_, res) => res.status(200).send("OK"));
+	public routes(): void {
+		this.router.get("/", (_, res) => res.status(200).send(`Express SaaS app. API version V1.`));
 
-// Test global error handling
-router.get("/error", (_, res) => {
-	throw new Error("Raise some error.");
+		// Health check
+		this.router.get("/health", (_, res) => res.status(200).send("OK"));
 
-	res.status(200).send(`API version ${apiVersion}`);
-});
+		// Test global error handling
+		this.router.get("/error", (_, res) => {
+			throw new Error("Raise some error.");
 
-// Module apis
-router.use(`${apiVersion}/auth`, authRoutes);
-router.use(`${apiVersion}/users`, userRoutes);
+			res.status(200).send(`API version ${apiVersion}`);
+		});
 
-// Catch all unmatched routes
-router.all("*", (_, res) => res.status(404).send("Route not found"));
+		// Module apis
+		this.router.use(`${apiVersion}/auth`, authRoutes);
+		this.router.use(`${apiVersion}/users`, usersRouter);
 
-export default router;
+		// Catch all unmatched routes
+		this.router.all("*", (_, res) => res.status(404).send("Route not found"));
+	}
+}
+
+const rootRoutes: RootRoutes = new RootRoutes();
+
+export default rootRoutes.router;
