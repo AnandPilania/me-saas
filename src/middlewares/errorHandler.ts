@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import log from "../providers/logger.provider";
+import log from "@providers/logger.provider";
 
 /**
  *

@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config(); // Must be loaded before other imports
 import express, { Application } from "express";
+import "module-alias/register";
 import cors from "cors";
 import compression from "compression";
 import helmet from "helmet";
@@ -8,11 +9,11 @@ import hpp from "hpp";
 import cookieParser from "cookie-parser";
 import config from "config";
 import passport from "passport";
-import log from "./providers/logger.provider";
-import connectMongo from "./providers/mongo.provider";
+import log from "@providers/logger.provider";
+import connectMongo from "@providers/mongo.provider";
 import router from "./routes";
-import { errorHandler } from "./middlewares";
-import passportAuth from "./modules/auth/passport/auth.config";
+import { errorHandler } from "@middlewares/.";
+import passportAuth from "@modules/auth/passport/auth.config";
 
 class App {
 	public app: Application;

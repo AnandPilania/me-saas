@@ -1,20 +1,19 @@
 import config from "config";
 import jwt from "jsonwebtoken";
-import { User } from "../users/user.model";
-import { JwtObject } from "./passport/jwt.object";
-import log from "../../providers/logger.provider";
+import { User } from "@modules/users/user.model";
+import { IJwtObject, IJwtPayload } from "@common/types/jwt.types";
+import log from "@providers/logger.provider";
 
 const jwt_secret = config.get<string>("jwt_secret");
 
 export class AuthServices {
-	public getToken = (user: User): JwtObject => {
-		const payload = {
-			sub: user._id,
+	public getToken = (user: User): IJwtObject => {
+		const payload: IJwtPayload = {
+			sub: user._id!.toString(),
 			username: user.username,
 			email: user.email,
 			name: user.name,
 			iat: new Date().getTime(),
-			// iat: Date.now(),
 			issuer: "grid-momenta.com",
 			audience: "grid-momenta.com",
 		};

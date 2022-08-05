@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import config from "config";
-import log from "./logger.provider";
+import log from "@providers/logger.provider";
 
 const mongo_url = config.get<string>("mongo_url");
 

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { CreateUserDto } from "./user.schema";
 import usersService, { UsersService } from "./user.services";
-import log from "../../providers/logger.provider";
+import log from "@providers/logger.provider";
 
 export class UsersController {
 	private usersService: UsersService = usersService;

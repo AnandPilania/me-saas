@@ -1,7 +1,7 @@
 import passport from "passport";
 import LocalStrategy from "passport-local";
-import usersService from "../../users/user.services";
-import log from "../../../providers/logger.provider";
+import usersService from "@modules/users/user.services";
+import log from "@providers/logger.provider";
 
 const localPassport = passport.use(
 	new LocalStrategy.Strategy({ usernameField: "username" }, async (username, password, done) => {

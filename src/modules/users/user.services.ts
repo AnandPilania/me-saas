@@ -1,7 +1,7 @@
 import argon2 from "argon2";
 import UserModel, { User } from "./user.model";
 import { CreateUserDto } from "./user.schema";
-import log from "../../providers/logger.provider";
+import log from "@providers/logger.provider";
 
 export class UsersService {
 	public createUser = async (data: CreateUserDto): Promise<User> => {

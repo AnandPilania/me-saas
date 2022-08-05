@@ -1,7 +1,7 @@
 import path from "path";
-import log from "../../../providers/logger.provider";
-import usersService from "../../users/user.services";
-import { User } from "../../users/user.model";
+import log from "@providers/logger.provider";
+import usersService from "@modules/users/user.services";
+import { User } from "@modules/users/user.model";
 
 export default function (passport: any): void {
 	log.info("[passport] auth config");

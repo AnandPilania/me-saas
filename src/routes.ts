@@ -1,7 +1,7 @@
 import { Router } from "express";
-import authRoutes from "./modules/auth/auth.routes";
-import usersRouter from "./modules/users/user.routes";
-import { apiVersion } from "./utils/consts";
+import authRoutes from "@modules/auth/auth.routes";
+import usersRouter from "@modules/users/user.routes";
+import { apiVersion } from "@utils/consts";
 
 class RootRoutes {
 	public router: Router;

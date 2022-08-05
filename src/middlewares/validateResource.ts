@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { AnyZodObject } from "zod";
-import { MiddlewareType } from "../utils/types";
-import log from "../providers/logger.provider";
+import { MiddlewareType } from "@utils/types";
+import log from "@providers/logger.provider";
 
 /**
  *

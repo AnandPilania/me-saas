@@ -1,13 +1,12 @@
 import { Request, Response, NextFunction } from "express";
+import log from "@providers/logger.provider";
+import usersService, { UsersService } from "@modules/users/user.services";
 import { LoginDto } from "./auth.schema";
-import log from "../../providers/logger.provider";
-import usersService, { UsersService } from "../users/user.services";
 import authService, { AuthServices } from "./auth.services";
 
 export class AuthController {
 	private usersService: UsersService = usersService;
 	private authService: AuthServices = authService;
-	public test: string = "Hello";
 
 	public protectedRoute = async (req: Request, res: Response): Promise<void> => {
 		res.status(200).send("Protected route");
@@ -18,7 +17,7 @@ export class AuthController {
 		res: Response,
 		next: NextFunction,
 	): Promise<boolean> => {
-		log.info("[controller] authenticateUser", this.test);
+		log.info("[controller] authenticateUser");
 
 		const body = req.body;
 

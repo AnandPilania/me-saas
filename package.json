@@ -97,5 +97,14 @@
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/grid-momenta/template-express-saas"
+	},
+	"_moduleAliases": {
+		"@config": "config",
+		"@src": "src",
+		"@modules": "src/modules",
+		"@middlewares": "src/middlewares",
+		"@providers": "src/providers",
+		"@utils": "src/utils",
+		"@common": "src/common"
 	}
 }
