@@ -39,8 +39,20 @@ export class AuthController {
 			return false;
 		}
 		const result = this.authService.getToken(user);
+
 		log.info("[success] Jwt token generated");
+
+		res.cookie("accessToken", result?.token, {
+			maxAge: 3.154e10, // 1 year in milliseconds
+			httpOnly: true,
+			domain: "localhost",
+			path: "/",
+			sameSite: "strict",
+			secure: false,
+		});
+
 		this.authService.notifyLogin(user.email);
+
 		res.status(200).json(result);
 		return true;
 	};
