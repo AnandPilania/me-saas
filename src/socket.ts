@@ -1,13 +1,19 @@
 import { Server as HttpServer } from "http";
 import { Server, Socket } from "socket.io";
-import { ISocketHandler } from "@common/types/socket.types";
+import {
+	ISocketHandler,
+	ClientToServerEvents,
+	ServerToClientEvents,
+	InterServerEvents,
+	SocketData,
+} from "@common/types/socket.types";
 
 const WEBSOCKET_CORS = {
 	origin: "*",
 	methods: ["GET", "POST"],
 };
 
-export class Websocket extends Server {
+export class Websocket extends Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData> {
 	private static io: Websocket;
 
 	public constructor(httpServer: HttpServer) {

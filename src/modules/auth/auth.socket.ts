@@ -7,13 +7,13 @@ export class AuthSocket implements ISocket {
 		log.info("[auth] Socket connected");
 		socket.emit("auth_ping", { message: "Welcome to the auth socket" });
 
-		socket.on("client_ping", (data: any) => {
+		socket.on("client_ping", (data: string) => {
 			log.info("[socket] Client pinged");
 			log.info(data);
 		});
 	};
 
-	public middlewareImplementation = (socket: Socket, next: any): void => {
+	public middlewareImplementation = (socket: Socket, next: () => void): void => {
 		// Implement middleware for auth here
 		next();
 	};
