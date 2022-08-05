@@ -7,8 +7,8 @@ import { IJwtPayload } from "@common/types/jwt.types";
 
 const options: StrategyOptions = {
 	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-	secretOrKey: config.get<string>("jwt_secret"),
-	algorithms: ["HS256"],
+	secretOrKey: Buffer.from(config.get<string>("public_key"), "base64").toString("ascii"),
+	algorithms: ["RS256"],
 };
 
 const strategy = new JwtStrategy.Strategy(

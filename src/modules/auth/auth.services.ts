@@ -6,10 +6,12 @@ import log from "@providers/logger.provider";
 import { Websocket } from "@src/socket";
 import { SOCKET_PATHS } from "@common/const/socket.const";
 
-const jwt_secret = config.get<string>("jwt_secret");
+// As our private key was base64 encoded, we need to decode it before we can use it
+const private_key = Buffer.from(config.get<string>("private_key"), "base64").toString("ascii");
+const public_key = Buffer.from(config.get<string>("public_key"), "base64").toString("ascii");
 
 export class AuthServices {
-	public getToken = (user: User): IJwtObject => {
+	public getToken = (user: User): IJwtObject | undefined => {
 		const payload: IJwtPayload = {
 			sub: user._id!.toString(),
 			username: user.username,
@@ -23,7 +25,7 @@ export class AuthServices {
 		const expiresIn = "1d";
 
 		try {
-			const signedToken = jwt.sign(payload, jwt_secret, { expiresIn });
+			const signedToken = jwt.sign(payload, private_key, { expiresIn, algorithm: "RS256" });
 
 			return {
 				token: signedToken,
@@ -31,16 +33,12 @@ export class AuthServices {
 			};
 		} catch (error) {
 			log.info(error);
-			return {
-				token: "",
-				expires: "",
-			};
 		}
 	};
 
 	public verifyToken = (token: string): IJwtPayload | undefined => {
 		try {
-			const payload = jwt.verify(token, jwt_secret) as IJwtPayload;
+			const payload = jwt.verify(token, public_key) as IJwtPayload;
 			return payload;
 		} catch (error) {
 			log.info(error);
