@@ -3,6 +3,8 @@ import jwt from "jsonwebtoken";
 import { User } from "@modules/users/user.model";
 import { IJwtObject, IJwtPayload } from "@common/types/jwt.types";
 import log from "@providers/logger.provider";
+import { Websocket } from "@src/socket";
+import { SOCKET_PATHS } from "@common/const/socket.const";
 
 const jwt_secret = config.get<string>("jwt_secret");
 
@@ -34,6 +36,24 @@ export class AuthServices {
 				expires: "",
 			};
 		}
+	};
+
+	public verifyToken = (token: string): IJwtPayload | undefined => {
+		try {
+			const payload = jwt.verify(token, jwt_secret) as IJwtPayload;
+			return payload;
+		} catch (error) {
+			log.info(error);
+			return undefined;
+		}
+	};
+
+	public notifyLogin = (email: string): void => {
+		log.info("[service] notifyLogin");
+		log.info("[socket] Notifying login to socket");
+
+		const io = Websocket.getInstance();
+		io.of(SOCKET_PATHS.AUTH).emit("logged_in", { data: { email } });
 	};
 }
 

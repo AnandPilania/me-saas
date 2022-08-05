@@ -14,23 +14,33 @@ import connectMongo from "@providers/mongo.provider";
 import router from "./routes";
 import { errorHandler } from "@middlewares/.";
 import passportAuth from "@modules/auth/passport/auth.config";
+import { createServer, Server } from "http";
+import { Websocket } from "./socket";
+import authSocket from "@modules/auth/auth.socket";
+import { SOCKET_PATHS } from "@common/const/socket.const";
 
 class App {
 	public app: Application;
+	public server: Server;
+	public io: Websocket;
 	public port: number | string;
 
 	public constructor() {
 		this.app = express();
+		this.server = createServer(this.app);
+		this.io = Websocket.getInstance(this.server);
 		this.port = config.get<number>("port");
 
 		this.initializeDatabaseConnections().catch((error) => console.error(error));
 		this.initializeMiddlewares();
 		this.initializeRoutes();
 		this.initializeErrorHandling();
+		this.initializeSocketHandlers();
 	}
 
 	public listen = (): void => {
-		this.app.listen(this.port, () => {
+		// We are now listening server instead of app
+		this.server.listen(this.port, () => {
 			log.info(`=========================================`);
 			log.info(`Server started on port ${this.port}`);
 			log.info(`=========================================`);
@@ -66,6 +76,10 @@ class App {
 	private initializeErrorHandling = (): void => {
 		// Error handler. Must be placed at the end of the middleware chain.
 		this.app.use(errorHandler);
+	};
+
+	private initializeSocketHandlers = (): void => {
+		this.io.initializeHandlers([{ path: `/${SOCKET_PATHS.AUTH}`, handler: authSocket }]);
 	};
 }
 

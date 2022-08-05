@@ -40,6 +40,7 @@ export class AuthController {
 		}
 		const result = this.authService.getToken(user);
 		log.info("[success] Jwt token generated");
+		this.authService.notifyLogin(user.email);
 		res.status(200).json(result);
 		return true;
 	};
