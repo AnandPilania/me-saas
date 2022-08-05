@@ -1,1 +1,2 @@
 PORT=3050
+HOSTNAME=http://localhost

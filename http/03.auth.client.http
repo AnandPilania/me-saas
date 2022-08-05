@@ -1,4 +1,4 @@
-@hostname = http://localhost
+@hostname = {{$dotenv HOSTNAME}}
 @port = {{$dotenv PORT}}
 @host = {{hostname}}:{{port}}
 
