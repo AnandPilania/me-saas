@@ -8,15 +8,15 @@ export class AuthController {
 	private usersService: UsersService = usersService;
 	private authService: AuthServices = authService;
 
-	public protectedRoute = async (req: Request, res: Response): Promise<void> => {
-		res.status(200).send("Protected route");
+	public protectedRoute = async (req: Request, res: Response): Promise<Response> => {
+		return res.status(200).send("Protected route");
 	};
 
 	public authenticateUser = async (
 		req: Request<{}, {}, LoginDto>,
 		res: Response,
 		next: NextFunction,
-	): Promise<boolean> => {
+	): Promise<Response> => {
 		log.info("[controller] authenticateUser");
 
 		const body = req.body;
@@ -26,8 +26,7 @@ export class AuthController {
 
 		if (!user) {
 			log.error("[error] user not found");
-			res.status(404).send("User not found.");
-			return false;
+			return res.status(404).send("User not found.");
 		}
 
 		// Verify password
@@ -35,8 +34,7 @@ export class AuthController {
 
 		if (!isValid) {
 			log.error("[error] Invalid username or password");
-			res.status(401).send("Invalid username or password.");
-			return false;
+			return res.status(401).send("Invalid username or password.");
 		}
 		const result = this.authService.getToken(user);
 
@@ -53,8 +51,7 @@ export class AuthController {
 
 		this.authService.notifyLogin(user.email);
 
-		res.status(200).json(result);
-		return true;
+		return res.status(200).json(result);
 	};
 }
 
