@@ -17,7 +17,7 @@ export class UsersService {
 
 		const user = UserModel.findById(id).orFail().exec();
 
-		log.info("[user] by id" + JSON.stringify(user));
+		log.info("[user] by id " + JSON.stringify(user));
 
 		return user;
 	};
