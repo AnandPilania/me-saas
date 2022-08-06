@@ -148,3 +148,6 @@ dist
 .vscode
 .vscode-test
 .idea
+
+# npm
+.npmrc
