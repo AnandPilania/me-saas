@@ -1,4 +1,4 @@
-import { DocumentType, getModelForClass, modelOptions, plugin, pre, prop, Severity } from "@typegoose/typegoose";
+import { DocumentType, getModelForClass, index, modelOptions, plugin, pre, prop, Severity } from "@typegoose/typegoose";
 import { Schema, Types } from "mongoose";
 import passportLocalMongoose from "passport-local-mongoose";
 import argon2 from "argon2";
@@ -25,6 +25,8 @@ import usersService from "./user.services";
 
 	return;
 })
+@index({ username: 1 }, { unique: true })
+@index({ email: 1 }, { unique: true })
 @plugin(passportLocalMongoose)
 export class User {
 	@prop({ required: true, type: Schema.Types.ObjectId })
