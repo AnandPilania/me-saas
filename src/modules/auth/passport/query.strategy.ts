@@ -5,12 +5,12 @@ import usersService from "@modules/users/user.services";
 import { IJwtPayload } from "@common/types/jwt.types";
 
 const options: StrategyOptions = {
-	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+	jwtFromRequest: ExtractJwt.fromUrlQueryParameter("token"),
 	secretOrKey: Buffer.from(config.get<string>("public_key"), "base64").toString("ascii"),
 	algorithms: ["RS256"],
 };
 
-const jwtStrategy = new JwtStrategy.Strategy(
+const queryStrategy = new JwtStrategy.Strategy(
 	options,
 	async (jwtPayload: IJwtPayload, done: VerifiedCallback): Promise<void> => {
 		log.info(`[jwt payload] ${JSON.stringify(jwtPayload)}`);
@@ -26,4 +26,4 @@ const jwtStrategy = new JwtStrategy.Strategy(
 	},
 );
 
-export default jwtStrategy;
+export default queryStrategy;

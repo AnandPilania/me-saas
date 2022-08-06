@@ -1,7 +1,9 @@
-import path from "path";
 import log from "@providers/logger.provider";
 import usersService from "@modules/users/user.services";
 import { User } from "@modules/users/user.model";
+import localStrategy from "./local.strategy";
+import jwtStrategy from "./jwt.strategy";
+import queryStrategy from "./query.strategy";
 
 export default function (passport: any): void {
 	log.info("[passport] auth config");
@@ -19,9 +21,11 @@ export default function (passport: any): void {
 		}
 	});
 
-	//load strategy files
-	require(path.join(__dirname, "local.strategy"));
-	require(path.join(__dirname, "jwt.strategy"));
+	// Implement strategies
+	passport.use("local", localStrategy);
+	passport.use("jwt", jwtStrategy);
+	passport.use("query", queryStrategy);
+
 	//TODO: Facebook
 	//TODO: Twitter
 	//TODO: Google
