@@ -1,6 +1,6 @@
 {
 	"name": "template-express-saas",
-	"version": "0.0.1",
+	"version": "1.0.0",
 	"main": "src/app.ts",
 	"author": "DHN Chandan <php.chandan@gmail.com>",
 	"license": "MIT",
