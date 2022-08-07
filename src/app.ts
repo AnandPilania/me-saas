@@ -49,7 +49,11 @@ class App {
 	};
 
 	private initializeDatabaseConnections = async (): Promise<void> => {
-		await connectMongo();
+		// await connectMongo();
+		mongoStrategy1.initializingS1().catch((error) => {
+			log.error("[mongo s1] Error in initializing mongo s1");
+			log.error(error);
+		});
 	};
 
 	private initializeMiddlewares = (): void => {
