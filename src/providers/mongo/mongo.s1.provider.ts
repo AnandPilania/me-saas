@@ -8,6 +8,11 @@ const mongo_user = config.get<string>("mongo_user");
 const mongo_password = config.get<string>("mongo_password");
 const mongo_host = config.get<string>("mongo_host");
 
+/**
+ *
+ * Mongo multi tenant strategy for SaaS
+ * Based on mongoose
+ */
 export class MongoStrategy1 {
 	public options: mongoose.ConnectOptions = {
 		keepAlive: true,
