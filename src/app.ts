@@ -19,6 +19,7 @@ import { Websocket } from "./socket";
 import authSocket from "@modules/auth/auth.socket";
 import { SOCKET_PATHS } from "@common/const/socket.const";
 import mongoStrategy1 from "@providers/mongo/mongo.s1.provider";
+import mongoStrategy2 from "@providers/mongo/mongo.s2.provider";
 
 class App {
 	public app: Application;
@@ -50,8 +51,12 @@ class App {
 
 	private initializeDatabaseConnections = async (): Promise<void> => {
 		// await connectMongo();
-		mongoStrategy1.initializingS1().catch((error) => {
-			log.error("[mongo s1] Error in initializing mongo s1");
+		// mongoStrategy1.initializingS1().catch((error) => {
+		// 	log.error("[mongo s1] Error in initializing mongo s1");
+		// 	log.error(error);
+		// });
+		mongoStrategy2.initializingS2().catch((error) => {
+			log.error("[mongo s2] Error in initializing mongo s2");
 			log.error(error);
 		});
 	};
