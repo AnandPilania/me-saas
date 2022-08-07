@@ -5,11 +5,13 @@ import log from "@providers/logger.provider";
 const mongo_url = config.get<string>("mongo_url");
 
 const run = async (): Promise<void> => {
-	await mongoose.connect(mongo_url, {
+	const options: mongoose.ConnectOptions = {
 		keepAlive: true,
 		socketTimeoutMS: 3000,
 		connectTimeoutMS: 3000,
-	});
+	};
+
+	await mongoose.connect(mongo_url, options);
 };
 
 async function connectMongo(): Promise<void> {

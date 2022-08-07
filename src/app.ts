@@ -10,7 +10,7 @@ import cookieParser from "cookie-parser";
 import config from "config";
 import passport from "passport";
 import log from "@providers/logger.provider";
-import connectMongo from "@providers/mongo.provider";
+import connectMongo from "@providers/mongo/mongo.provider";
 import router from "./routes";
 import { errorHandler } from "@middlewares/.";
 import passportAuth from "@modules/auth/passport/auth.config";
@@ -18,6 +18,7 @@ import { createServer, Server } from "http";
 import { Websocket } from "./socket";
 import authSocket from "@modules/auth/auth.socket";
 import { SOCKET_PATHS } from "@common/const/socket.const";
+import mongoStrategy1 from "@providers/mongo/mongo.s1.provider";
 
 class App {
 	public app: Application;
